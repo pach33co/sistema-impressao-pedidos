@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,7 +24,7 @@
             margin: 0 auto;
             background: white;
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             overflow: hidden;
         }
 
@@ -224,14 +225,29 @@
 
         /* Estilos para impressão */
         @media print {
+            * {
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            @page {
+                margin: 0;
+                padding: 0;
+                size: 80mm auto;
+                /* Largura fixa, altura automática */
+            }
+
             body {
                 background: white;
                 padding: 0;
+                margin: 0;
             }
 
             .container {
                 box-shadow: none;
                 border-radius: 0;
+                margin: 0;
+                padding: 0;
             }
 
             .header,
@@ -244,21 +260,40 @@
             }
 
             .content {
-                padding: 0;
+                padding: 0 !important;
+                margin: 0 !important;
             }
 
             .preview {
-                border: none;
-                background: white;
-                padding: 10px;
-                font-size: 12px;
-                color: black;
+                border: none !important;
+                background: white !important;
+                padding: 5mm !important;
+                /* Pequena margem interna */
+                margin: 0 !important;
+                font-size: 14px !important;
+                font-weight: bold !important;
+                /* NEGRITO para impressão mais escura */
+                color: #000000 !important;
+                /* PRETO PURO */
+                line-height: 1.4 !important;
+                font-family: 'Courier New', 'Consolas', monospace !important;
+                max-width: 80mm;
+                min-height: auto !important;
+                height: auto !important;
+                page-break-after: avoid !important;
             }
 
-            /* Formatação específica para impressora térmica */
-            .preview {
-                max-width: 80mm; /* Largura padrão de bobina térmica */
-                margin: 0;
+            /* Força texto preto e negrito em todos os elementos */
+            .preview * {
+                color: #000000 !important;
+                font-weight: bold !important;
+            }
+
+            /* Remove espaços extras */
+            html,
+            body {
+                height: auto !important;
+                overflow: hidden !important;
             }
         }
 
@@ -267,6 +302,7 @@
                 opacity: 0;
                 transform: translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -278,6 +314,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="header">
@@ -300,9 +337,7 @@
 
             <div class="section">
                 <div class="section-title">📝 Cole o pedido aqui:</div>
-                <textarea 
-                    id="pedidoInput" 
-                    placeholder="Cole aqui o pedido copiado do WhatsApp...
+                <textarea id="pedidoInput" placeholder="Cole aqui o pedido copiado do WhatsApp...
 
 Exemplo:
 ━━━━━━━━━━━━━━━━━
@@ -325,8 +360,7 @@ Exemplo:
 🚚 Entrega: Sim
 
 Observações: Sem cebola, por favor.
-━━━━━━━━━━━━━━━━━"
-                    oninput="atualizarPrevia()"></textarea>
+━━━━━━━━━━━━━━━━━" oninput="atualizarPrevia()"></textarea>
             </div>
 
             <div class="section">
@@ -388,7 +422,7 @@ Observações: Sem cebola, por favor.
 
         function imprimirPedido() {
             const input = document.getElementById('pedidoInput');
-            
+
             if (input.value.trim() === '') {
                 alert('⚠️ Por favor, cole um pedido antes de imprimir!');
                 return;
@@ -398,13 +432,13 @@ Observações: Sem cebola, por favor.
             if (confirm('🖨️ Deseja imprimir este pedido?')) {
                 // Dispara a impressão
                 window.print();
-                
+
                 // Feedback visual
                 const btnImprimir = document.getElementById('btnImprimir');
                 const textoOriginal = btnImprimir.innerHTML;
                 btnImprimir.innerHTML = '✅ Impresso!';
                 btnImprimir.style.background = 'linear-gradient(135deg, #28a745 0%, #20c997 100%)';
-                
+
                 setTimeout(() => {
                     btnImprimir.innerHTML = textoOriginal;
                     btnImprimir.style.background = '';
@@ -416,12 +450,12 @@ Observações: Sem cebola, por favor.
             if (confirm('🗑️ Deseja limpar o pedido atual?')) {
                 document.getElementById('pedidoInput').value = '';
                 atualizarPrevia();
-                
+
                 // Feedback visual
                 const btnLimpar = document.getElementById('btnLimpar');
                 const textoOriginal = btnLimpar.innerHTML;
                 btnLimpar.innerHTML = '✅ Limpo!';
-                
+
                 setTimeout(() => {
                     btnLimpar.innerHTML = textoOriginal;
                 }, 1500);
@@ -429,13 +463,13 @@ Observações: Sem cebola, por favor.
         }
 
         // Atalhos de teclado
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', function (e) {
             // Ctrl/Cmd + P = Imprimir
             if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
                 e.preventDefault();
                 imprimirPedido();
             }
-            
+
             // Ctrl/Cmd + L = Limpar
             if ((e.ctrlKey || e.metaKey) && e.key === 'l') {
                 e.preventDefault();
@@ -444,9 +478,10 @@ Observações: Sem cebola, por favor.
         });
 
         // Foco automático no campo de texto ao carregar a página
-        window.onload = function() {
+        window.onload = function () {
             document.getElementById('pedidoInput').focus();
         };
     </script>
 </body>
+
 </html>
