@@ -14,7 +14,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #dee2e6;
             min-height: 100vh;
             padding: 20px;
         }
@@ -223,31 +223,40 @@
             margin-top: 5px;
         }
 
-        /* Estilos para impressão */
+        /* Estilos para impressão - VERSÃO OTIMIZADA V3 */
         @media print {
             * {
                 margin: 0 !important;
                 padding: 0 !important;
+                box-sizing: border-box !important;
             }
 
             @page {
-                margin: 0;
-                padding: 0;
-                size: 80mm auto;
-                /* Largura fixa, altura automática */
+                margin: 0mm !important;
+                padding: 0mm !important;
+                size: 80mm auto; /* Largura 80mm, altura automática (ajusta ao conteúdo) */
+            }
+
+            html {
+                margin: 0 !important;
+                padding: 0 !important;
+                height: auto !important;
             }
 
             body {
-                background: white;
-                padding: 0;
-                margin: 0;
+                background: white !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                height: auto !important;
+                overflow: hidden !important;
             }
 
             .container {
-                box-shadow: none;
-                border-radius: 0;
-                margin: 0;
-                padding: 0;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                height: auto !important;
             }
 
             .header,
@@ -255,45 +264,53 @@
             .section-title,
             .buttons,
             textarea,
-            .stats {
+            .stats,
+            .section {
                 display: none !important;
+                height: 0 !important;
+                margin: 0 !important;
+                padding: 0 !important;
             }
 
             .content {
                 padding: 0 !important;
                 margin: 0 !important;
+                height: auto !important;
             }
 
             .preview {
                 border: none !important;
                 background: white !important;
-                padding: 5mm !important;
-                /* Pequena margem interna */
+                padding: 3mm 5mm 3mm 5mm !important; /* Margem mínima: 3mm topo/baixo, 5mm laterais */
                 margin: 0 !important;
                 font-size: 14px !important;
                 font-weight: bold !important;
-                /* NEGRITO para impressão mais escura */
                 color: #000000 !important;
-                /* PRETO PURO */
-                line-height: 1.4 !important;
+                line-height: 1.3 !important;
                 font-family: 'Courier New', 'Consolas', monospace !important;
-                max-width: 80mm;
+                max-width: 80mm !important;
+                width: 80mm !important;
                 min-height: auto !important;
                 height: auto !important;
                 page-break-after: avoid !important;
+                page-break-inside: avoid !important;
+                display: block !important;
             }
 
-            /* Força texto preto e negrito em todos os elementos */
+            /* Força texto preto e negrito */
             .preview * {
                 color: #000000 !important;
                 font-weight: bold !important;
+                margin: 0 !important;
             }
 
-            /* Remove espaços extras */
-            html,
-            body {
-                height: auto !important;
-                overflow: hidden !important;
+            /* Remove qualquer espaço extra depois do conteúdo */
+            .preview:after {
+                content: '' !important;
+                display: block !important;
+                height: 0 !important;
+                margin: 0 !important;
+                padding: 0 !important;
             }
         }
 
@@ -326,12 +343,11 @@
             <div class="instructions">
                 <h3>📋 Como usar:</h3>
                 <ol>
-                    <li>Quando chegar um pedido no <strong>WhatsApp</strong>, selecione toda a mensagem</li>
-                    <li>Copie com <code>Ctrl+C</code> (Windows) ou <code>Cmd+C</code> (Mac)</li>
-                    <li>Cole na caixa abaixo com <code>Ctrl+V</code> ou <code>Cmd+V</code></li>
-                    <li>Confira na prévia se está tudo certo</li>
+                    <li>Copie o pedido do WhatsApp (<code>Ctrl+C</code>)</li>
+                    <li>Cole na caixa abaixo (<code>Ctrl+V</code>)</li>
+                    <li>Confira na prévia</li>
                     <li>Clique em <strong>"IMPRIMIR PEDIDO"</strong></li>
-                    <li>Após imprimir, clique em <strong>"LIMPAR"</strong> para o próximo pedido</li>
+                    <li>Após imprimir, clique em <strong>"LIMPAR"</strong></li>
                 </ol>
             </div>
 
